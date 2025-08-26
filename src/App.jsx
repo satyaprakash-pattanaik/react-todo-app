@@ -8,7 +8,8 @@ import TodoCard from './components/TodoCard'
 function App() {
   const [showForm, setShowForm] = useState(false)
   const [tasks,setTasks] = useState([]);
-  const [edit,setEdit] = useState(null)
+  const [edit,setEdit] = useState(null);
+ 
 
   const handleFormSubmit = (tasksData) => {
   if (edit !== null) {
@@ -21,6 +22,13 @@ function App() {
   }
   setShowForm(false);
 };
+
+  const handleTogleComplete = (index) => {
+    setTasks(prev => prev.map ((t,i) => 
+  i == index ? {...t,completed : !t.completed} :t 
+)
+);
+  }
 
 
   const handleEdit = (index) => {
@@ -63,12 +71,13 @@ function App() {
             </div>
           )}
       </div>
-      <h2 className='font-bold mt-4 text-gray-500'>Task list to complete</h2>
-      <div className='w-full space-y-4 mt-10 flex flex-row overflow-auto'>
+      <h2 className='font-bold mt-4 text-gray-500 flex justify-center p-4 '>Task list to complete</h2>
+      <div className='w-full space-y-4 mt-10 flex flex-row overflow-auto mx-2 p-4'>
           {tasks.map((tasks,index) => (
             <TodoCard key={index} task ={tasks} 
             onDelete={ () => {handleDelete(index)}}
-            onEdit={() => {handleEdit(index)}}/>
+            onEdit={() => {handleEdit(index)}}
+            onComplete={() => handleTogleComplete(index)}/>
           ))}
       </div>
     </div>
